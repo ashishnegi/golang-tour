@@ -23,6 +23,23 @@ func tryCrashing(crash WillCrash) bool {
 	return p.shouldCrash // crash.shouldCrash will also work.
 }
 
+func arraysAreHere(size int) [10]int {
+	var a [10]int // do no know how to make variable size arrays yet..
+	for i := 0; i < 10; i++ {
+		a[i] = i
+	}
+
+	return a
+}
+
+func slicesOfArrays() {
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+
+	var s []int = primes[1:4]
+	s[1] = 33
+	fmt.Println("changing slice : ", s, " changd primes :( : ", primes)
+}
+
 func main() {
 	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
@@ -38,5 +55,9 @@ func main() {
 
 	crash := WillCrash{false}
 
-	fmt.Println("should i crash ? ", tryCrashing(crash))
+	fmt.Println("should i crash ? ", tryCrashing(crash)) // do not know how to pass pointers yet.
+
+	fmt.Println("arrays are here and there size can not be modified: ", arraysAreHere(100))
+
+	slicesOfArrays()
 }
