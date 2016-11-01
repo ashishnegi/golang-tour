@@ -10,7 +10,7 @@ func returnTwoValues(num int) (int, int) {
 }
 
 func main() {
-	var clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
+	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
 
 	fmt.Println(stringutils.Reverse("Hello, go !!!."),
