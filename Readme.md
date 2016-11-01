@@ -15,5 +15,6 @@ export PATH=$PATH:$GOPATH/bin
 
 cd $HOME/golang
 go install github.com/ashishnegi/goorleans
+go test github.com/ashishnegi/goorleans
 $GOPATH/goorleans
 ```
