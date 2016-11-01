@@ -14,6 +14,15 @@ func hereBePointers(q int) int {
 	return (*p + 100)
 }
 
+type WillCrash struct {
+	shouldCrash bool
+}
+
+func tryCrashing(crash WillCrash) bool {
+	p := &crash
+	return p.shouldCrash // crash.shouldCrash will also work.
+}
+
 func main() {
 	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
@@ -26,4 +35,8 @@ func main() {
 		clojure,
 		fst,
 		hereBePointers(101))
+
+	crash := WillCrash{false}
+
+	fmt.Println("should i crash ? ", tryCrashing(crash))
 }
