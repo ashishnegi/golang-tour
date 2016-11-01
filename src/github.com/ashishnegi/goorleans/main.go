@@ -9,6 +9,11 @@ func returnTwoValues(num int) (int, int) {
 	return num / 2, num / 3
 }
 
+func hereBePointers(q int) int {
+	p := &q
+	return (*p + 100)
+}
+
 func main() {
 	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
@@ -19,5 +24,6 @@ func main() {
 		"\n",
 		haskell,
 		clojure,
-		fst)
+		fst,
+		hereBePointers(101))
 }
