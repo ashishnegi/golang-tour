@@ -13,6 +13,8 @@ func main() {
 	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
 
+	defer fmt.Println("you know what i love... but such is life..")
+
 	fmt.Println(stringutils.Reverse("Hello, go !!!."),
 		"\n",
 		haskell,
