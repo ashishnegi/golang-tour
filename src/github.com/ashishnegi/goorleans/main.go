@@ -37,7 +37,15 @@ func slicesOfArrays() {
 
 	var s []int = primes[1:4]
 	s[1] = 33
-	fmt.Println("changing slice : ", s, " changd primes :( : ", primes)
+	fmt.Println("changing slice : ", s, " changed primes :( : ", primes)
+}
+
+func dynamicSlices(size int) []int {
+	a := make([]int, size)
+	for i := 0; i < size; i++ {
+		a[i] = i
+	}
+	return a
 }
 
 func main() {
@@ -60,4 +68,5 @@ func main() {
 	fmt.Println("arrays are here and there size can not be modified: ", arraysAreHere(100))
 
 	slicesOfArrays()
+	fmt.Println(dynamicSlices(20))
 }
