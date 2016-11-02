@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/ashishnegi/stringutils"
+	"strings"
 )
 
 func returnTwoValues(num int) (int, int) {
@@ -54,6 +55,20 @@ type Coder struct {
 
 var coders map[string]Coder
 
+func WordCount(s string) map[string]int {
+	fields := strings.Fields(s)
+	res := map[string]int{}
+	for _, field := range fields {
+		_, present := res[field]
+		if present {
+			res[field] += 1
+		} else {
+			res[field] = 1
+		}
+	}
+	return res
+}
+
 func main() {
 	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
@@ -80,4 +95,7 @@ func main() {
 	coders = make(map[string]Coder)
 	coders["haskell"] = Coder{"Ashish Negi"}
 	fmt.Println(coders)
+
+	fmt.Println(WordCount("hi.. i love haskell , clojure, c++, liking rust and may be go.. :)"))
+
 }
