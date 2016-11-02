@@ -48,6 +48,12 @@ func dynamicSlices(size int) []int {
 	return a
 }
 
+type Coder struct {
+	name string
+}
+
+var coders map[string]Coder
+
 func main() {
 	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
@@ -69,4 +75,9 @@ func main() {
 
 	slicesOfArrays()
 	fmt.Println(dynamicSlices(20))
+
+	// map :
+	coders = make(map[string]Coder)
+	coders["haskell"] = Coder{"Ashish Negi"}
+	fmt.Println(coders)
 }
