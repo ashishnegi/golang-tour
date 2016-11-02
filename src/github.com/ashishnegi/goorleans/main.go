@@ -69,6 +69,18 @@ func WordCount(s string) map[string]int {
 	return res
 }
 
+// fibonacci is a function that returns
+// a function that returns an int.
+func fibonacci() func() int {
+	a, b := -1, 1
+	return func() int {
+		c := a
+		a = b
+		b = c + a
+		return b
+	}
+}
+
 func main() {
 	const clojure, haskell = "clojure: yo!!\n", "haskell: hell yaa!!!\n"
 	fst, _ := returnTwoValues(100)
@@ -98,4 +110,8 @@ func main() {
 
 	fmt.Println(WordCount("hi.. i love haskell , clojure, c++, liking rust and may be go.. :)"))
 
+	f := fibonacci()
+	for i := 0; i < 10; i++ {
+		fmt.Println(f())
+	}
 }
