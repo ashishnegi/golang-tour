@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/ashishnegi/chans"
 	"github.com/ashishnegi/interfaces"
 	"github.com/ashishnegi/stringutils"
 	"strings"
@@ -119,4 +120,11 @@ func main() {
 	interfaces.TestInterfaces()
 	interfaces.DynamicTypingIsIt()
 	interfaces.CheckSqrt()
+
+	arr := make([]int, 0, 100000)
+	for i := 0; i < cap(arr); i++ {
+		arr = append(arr, i)
+	}
+
+	fmt.Println(chans.TwiceFastSum(arr))
 }
