@@ -25,3 +25,18 @@ func TestInterfaces() {
 	seq := SeqString{"s..seqs rocks!!!"}
 	fmt.Println("first char: ", seq.first(), "\n rest seq:", seq.rest())
 }
+
+func DynamicTypingIsIt() {
+	var i interface{}
+	describe(i)
+
+	i = 42
+	describe(i)
+
+	i = "hello"
+	describe(i)
+}
+
+func describe(i interface{}) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}

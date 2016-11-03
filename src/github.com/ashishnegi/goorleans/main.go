@@ -117,4 +117,5 @@ func main() {
 	}
 
 	interfaces.TestInterfaces()
+	interfaces.DynamicTypingIsIt()
 }
