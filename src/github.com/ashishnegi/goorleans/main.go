@@ -118,4 +118,5 @@ func main() {
 
 	interfaces.TestInterfaces()
 	interfaces.DynamicTypingIsIt()
+	interfaces.CheckSqrt()
 }
