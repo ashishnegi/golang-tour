@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/ashishnegi/interfaces"
 	"github.com/ashishnegi/stringutils"
 	"strings"
 )
@@ -114,4 +115,6 @@ func main() {
 	for i := 0; i < 10; i++ {
 		fmt.Println(f())
 	}
+
+	interfaces.TestInterfaces()
 }
