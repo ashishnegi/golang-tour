@@ -35,13 +35,19 @@ func fibonacci(n int, c chan int) {
 	close(c)
 }
 
+type Tree struct {
+	Left  *Tree
+	Value int
+	Right *Tree
+}
+
 // The select statement lets a goroutine wait on multiple communication operations.
 // A select blocks until one of its cases can run, then it executes that case.
 // It chooses one at random if multiple are ready.
 
 // Walk walks the tree t sending all values
 // from the tree to the channel ch.
-func Walk(t *tree.Tree, ch chan int) {
+func Walk(t *Tree, ch chan int) {
 	if t == nil {
 		return
 	}
@@ -52,7 +58,7 @@ func Walk(t *tree.Tree, ch chan int) {
 
 // Same determines whether the trees
 // t1 and t2 contain the same values.
-func Same(t1, t2 *tree.Tree) bool {
+func Same(t1, t2 *Tree) bool {
 	c1 := make(chan int)
 	c2 := make(chan int)
 
@@ -70,8 +76,9 @@ func Same(t1, t2 *tree.Tree) bool {
 		y, more2 := <-c2
 		if more1 == false && more2 == false {
 			return true
-		}
-		if x != y {
+		} else if more1 != more2 {
+			return false
+		} else if x != y {
 			return false
 		}
 	}
