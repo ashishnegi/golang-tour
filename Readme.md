@@ -1,8 +1,7 @@
-# Learning GO..
-
-but also reading paper https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Orleans-MSR-TR-2014-41.pdf
+# On a tour of GO in 5 hours..
 
 1. Following https://golang.org/doc/code.html
+2. Touring https://tour.golang.org/welcome/1
 
 ## Building :
 1. Install Go
@@ -14,7 +13,7 @@ export GOPATH=$HOME/golang
 export PATH=$PATH:$GOPATH/bin
 
 cd $HOME/golang
-go install github.com/ashishnegi/goorleans
-go test github.com/ashishnegi/goorleans
-$GOPATH/goorleans
+go install github.com/ashishnegi/goblocks
+go test github.com/ashishnegi/stringutils
+$GOPATH/bin/goblocks
 ```

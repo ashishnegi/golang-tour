@@ -18,9 +18,6 @@ type Result struct {
 // Crawl uses fetcher to recursively crawl
 // pages starting with url, to a maximum of depth.
 func Crawl(url string, depth int, fetcher Fetcher, ch chan Result) {
-	// TODO: Fetch URLs in parallel.
-	// TODO: Don't fetch the same URL twice.
-	// This implementation doesn't do either:
 	if depth > 0 {
 		_, urls, err := fetcher.Fetch(url)
 		if err != nil {
@@ -42,6 +39,10 @@ func CrawlTest() {
 	store := make(map[string]bool)
 	store[mainUrl] = true
 	waiting := 1
+
+	// Fetch URLs in parallel. (see go before Crawl)
+	// Don't fetch the same URL twice. (store keeps track of that.)
+
 	for waiting > 0 {
 		result := <-ch
 		waiting--
