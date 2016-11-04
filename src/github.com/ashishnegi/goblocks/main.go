@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/ashishnegi/chans"
+	"github.com/ashishnegi/crawler"
 	"github.com/ashishnegi/interfaces"
 	"github.com/ashishnegi/stringutils"
 	"strings"
@@ -127,4 +128,6 @@ func main() {
 	}
 
 	fmt.Println(chans.TwiceFastSum(arr))
+
+	crawler.CrawlTest()
 }
