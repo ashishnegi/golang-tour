@@ -44,10 +44,19 @@ func Bing(query string) (results []Result) {
 	go func() { resultsChannel <- ImageSearch(query) }()
 	go func() { resultsChannel <- VideoSearch(query) }()
 
+	// make a timeout of 70 milliseconds for complete query.
+	timeout := time.After(70 * time.Millisecond)
 	for i := 0; i < 3; i++ {
 		// take value from a channel ==> <-channelName.
-		result := <-resultsChannel
-		results = append(results, result)
+		select {
+		case result := <-resultsChannel:
+			results = append(results, result)
+		case <-timeout:
+			fmt.Println("Request timedout")
+			return
+			// all channels will be garbage collected.
+			// but not go routines.
+		}
 	}
 	// channel is garbage collected.
 	// no need to close it.
