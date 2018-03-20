@@ -17,3 +17,8 @@ go install github.com/ashishnegi/goblocks
 go test github.com/ashishnegi/stringutils
 $GOPATH/bin/goblocks
 ```
+
+3. Run particular program
+```
+go run github.com/ashishnegi/search-engine/search.go
+```
