@@ -32,11 +32,25 @@ func fakeSearch(server string) Search {
 	}
 }
 
-// Bing1.0
+// Bing2.0
 func Bing(query string) (results []Result) {
-	results = append(results, WebSearch(query))
-	results = append(results, ImageSearch(query))
-	results = append(results, VideoSearch(query))
+	// channel is first class citizen. you can pass them around like values.
+	// make a type safe channel.
+	resultsChannel := make(chan Result)
+
+	// go func() {... } () ==> starts function on a go routine.
+	// to put value on a channel ==> channelName <- value.
+	go func() { resultsChannel <- WebSearch(query) }()
+	go func() { resultsChannel <- ImageSearch(query) }()
+	go func() { resultsChannel <- VideoSearch(query) }()
+
+	for i := 0; i < 3; i++ {
+		// take value from a channel ==> <-channelName.
+		result := <-resultsChannel
+		results = append(results, result)
+	}
+	// channel is garbage collected.
+	// no need to close it.
 	return
 }
 
