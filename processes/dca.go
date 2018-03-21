@@ -18,7 +18,8 @@ type csvevent struct {
 	lineno int
 }
 
-func readEtlFiles(file string) (stream chan string) {
+func readEtlFiles(file string) chan string {
+	stream := make(chan string)
 	go func() {
 		for {
 			fmt.Println("sending event.")
@@ -28,7 +29,8 @@ func readEtlFiles(file string) (stream chan string) {
 	return stream
 }
 
-func parseEtlFiles(msgChan chan string) (events chan event) {
+func parseEtlFiles(msgChan chan string) chan event {
+	events := make(chan event)
 	go func() {
 		for {
 			fmt.Println("looking for msg")
@@ -81,13 +83,17 @@ func main() {
 	go publishEtlToCsvEvents(leaseEventsCh, azureCsvUploaderCh)
 
 	printEvtToScreen := func(name string, achan chan event) {
-		e := <-achan
-		fmt.Printf("%s : %+v\n", name, e)
+		for {
+			e := <-achan
+			fmt.Printf("%s : %+v\n", name, e)
+		}
 	}
 
 	printCsvToScreen := func(name string, achan chan csvevent) {
-		e := <-achan
-		fmt.Printf("%s : %+v\n", name, e)
+		for {
+			e := <-achan
+			fmt.Printf("%s : %+v\n", name, e)
+		}
 	}
 
 	go printEvtToScreen("azureuploader", azureUploaderCh)
@@ -96,7 +102,7 @@ func main() {
 
 	stopCh := make(chan bool)
 	go func() {
-		time.Sleep(3000 * time.Millisecond)
+		time.Sleep(6000 * time.Millisecond)
 		stopCh <- true
 	}()
 
