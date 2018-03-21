@@ -6,9 +6,10 @@ import (
 )
 
 type event struct {
-	pid int
-	tid int
-	msg string
+	pid         int
+	tid         int
+	msg         string
+	processedBy int
 }
 
 type csvevent struct {
@@ -22,7 +23,7 @@ func readEtlFiles(file string) chan string {
 	stream := make(chan string)
 	go func() {
 		for {
-			fmt.Println("sending event.")
+			fmt.Printf("read one line from file : %s\n", file)
 			time.Sleep(100 * time.Millisecond)
 			stream <- "10 100 " + file + ":etl_message"
 		}
@@ -34,9 +35,8 @@ func parseEtlFiles(msgChan chan string) chan event {
 	events := make(chan event)
 	go func() {
 		for {
-			fmt.Println("looking for msg")
 			msg := <-msgChan
-			fmt.Println("sending parsed etl.")
+			fmt.Println("Parsed msg to etl")
 			events <- event{pid: 10, tid: 100, msg: msg}
 		}
 	}()
@@ -66,12 +66,52 @@ func publishEtlToCsvEvents(eventChan chan event, csvListeners ...chan csvevent) 
 	}
 }
 
+func fanOut(in chan event, outs ...chan event) {
+	for i := range outs {
+		go func(i int) {
+			for {
+				msg, ok := <-in
+				msg.processedBy = i
+				if ok {
+					outs[i] <- msg
+				} else {
+					break
+				}
+			}
+		}(i)
+	}
+}
+
+func fanIn(out chan event, ins ...chan event) {
+	for i := range ins {
+		go func(in chan event) {
+			for {
+				msg, ok := <-in
+				if ok {
+					out <- msg
+				} else {
+					break
+				}
+			}
+		}(ins[i])
+	}
+}
+
+// so, we find that parsing seems to be taking lot of time.
+// and fabric_events has most of the events.
+// we need to double up processing for fabric_events.
 func main() {
 	fabricFileCh := readEtlFiles("fabric_events.etl")
 	ktlFileCh := readEtlFiles("ktl_events.etl")
 	leaseFileCh := readEtlFiles("lease_events.etl")
 
-	fabricEventsCh := parseEtlFiles(fabricFileCh)
+	fabricEventsOutCh1 := make(chan event)
+	fabricEventsOutCh2 := make(chan event)
+	fabricEventsInCh := parseEtlFiles(fabricFileCh)
+	fanOut(fabricEventsInCh, fabricEventsOutCh1, fabricEventsOutCh2)
+	fabricEventsCh := make(chan event)
+	fanIn(fabricEventsCh, fabricEventsOutCh1, fabricEventsOutCh2)
+
 	ktlEventsCh := parseEtlFiles(ktlFileCh)
 	leaseEventsCh := parseEtlFiles(leaseFileCh)
 
