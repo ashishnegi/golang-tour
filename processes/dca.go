@@ -23,6 +23,7 @@ func readEtlFiles(file string) chan string {
 	go func() {
 		for {
 			fmt.Println("sending event.")
+			time.Sleep(100 * time.Millisecond)
 			stream <- "10 100 " + file + ":etl_message"
 		}
 	}()
@@ -100,11 +101,5 @@ func main() {
 	go printEvtToScreen("inmemoryproducer", inMemoryProducerCh)
 	go printCsvToScreen("azurecsvuploader", azureCsvUploaderCh)
 
-	stopCh := make(chan bool)
-	go func() {
-		time.Sleep(6000 * time.Millisecond)
-		stopCh <- true
-	}()
-
-	<-stopCh
+	time.Sleep(1000 * time.Millisecond)
 }
