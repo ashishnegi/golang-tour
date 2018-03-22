@@ -22,3 +22,7 @@ $GOPATH/bin/goblocks
 ```
 go run github.com/ashishnegi/search-engine/search.go
 ```
+4. Get test dependencies
+```
+go get -t
+```
