@@ -2,6 +2,7 @@ package bench
 
 import (
 	"encoding/json"
+	// "strconv"
 )
 
 func fib(nth int) int {
@@ -16,9 +17,9 @@ func fib(nth int) int {
 }
 
 func hello(nth int) int {
-	world("hello world..")
+	world("hello world...")
 	n := fib(nth)
-	world(" nth fib")
+	world("nth world") // replace with strconv.Itoa(nth)
 	return n
 }
 

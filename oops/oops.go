@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// Composition over Inheritance
 type Creature struct {
 	Name string
 	Real bool
@@ -18,10 +19,13 @@ type FlyingCreature struct {
 	WingSpan int
 }
 
+// syntax of method of a struct
+// func (<object-name/this> <ClassName>) <func-name> () <return-type>
 func (c FlyingCreature) toString() string {
 	return fmt.Sprintf("Flying Creature: %s ; Real : %v ; WingSpan : %d", c.Name, c.Real, c.WingSpan)
 }
 
+// Polymorphism
 type IShape interface {
 	Area() float32
 }
@@ -34,6 +38,8 @@ type Circle struct {
 	radius float32
 }
 
+// You can make a Rectangle an IShape
+// without knowing about IShape or Rectangle extending IShape before.
 func (r Rectangle) Area() float32 {
 	return r.width * r.height
 }

@@ -6,6 +6,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// name of the file ends with *_test.go
+
 // name of tests should be TestXXXX
 func TestFib(t *testing.T) {
 	assert.Equal(t, 0, fib(1), "fib test")
@@ -70,12 +72,23 @@ func BenchmarkJson(b *testing.B) {
 // PASS
 // ok      github.com/ashishnegi/golang-tour/bench 2.356s
 
-// ashish@DESKTOP-133N35M MINGW64 /d/GoPath/src/github.com/ashishnegi/golang-tour/bench (master)
-// $ go test -bench Hello -benchmem
-// nth fib
-// 2000            625167 ns/op              32 B/op          2 allocs/op
+// C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go test -bench Hello -benchmem
+// goos: windows
+// goarch: amd64
+// pkg: github.com/ashishnegi/golang-tour/bench
+// BenchmarkHello-4            2000            711997 ns/op               0 B/op          0 allocs/op
 // PASS
-// ok      github.com/ashishnegi/golang-tour/bench 1.375s
+// ok      github.com/ashishnegi/golang-tour/bench 2.953s
+
+// change code in hello to allocate a string.
+
+// C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go test -bench Hello -benchmem
+// goos: windows
+// goarch: amd64
+// pkg: github.com/ashishnegi/golang-tour/bench
+// BenchmarkHello-4            2000            814000 ns/op               8 B/op          1 allocs/op
+// PASS
+// ok      github.com/ashishnegi/golang-tour/bench 3.112s
 
 // $ go test -bench Hello -benchmem -cpuprofile cpu.out
 // $ go tool pprof bench.test.exe cpu.out
