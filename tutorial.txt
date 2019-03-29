@@ -1,0 +1,176 @@
+Here is the code : https://github.com/ashishnegi/golang-tour
+
+See, how It looks like for normal programmer :
+2 env variables : GOROOT and GOPATH
+
+C:\Users\asnegi>dir go\bin\
+C:\Users\asnegi>dir go\src\github.com\ashishnegi\golang-tour\
+
+del go\bin\search-engine.exe
+C:\Users\asnegi>rmdir /s /q go\src\github.com\ashishnegi\golang-tour\
+
+1. Setup golang : https://nats.io/documentation/tutorials/go-install/
+
+2. And run `go get -d github.com/ashishnegi/golang-tour`
+# inspired by Plan9 OS : everything is a file.
+dir go\src\github.com\ashishnegi\golang-tour\
+
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\search-engine>go build search.go
+
+3. Run `go run <file_name>.go` to run code in file which has main function.
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>go run search-engine\search.go
+[video-server1 result for "golang"
+ image-server2 result for "golang"
+ web-server1 result for "golang"
+]
+43.1718ms
+
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour> git fetch --tags
+
+4. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git fetch --tag  origin bing1.0
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git checkout tag/bing1.0 -b bing1.0
+
+5. Talk about code.
+
+6. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>go run search-engine\search.go
+[web-server result for "golang"
+ image-server result for "golang"
+ video-server result for "golang"
+]
+159.7285ms
+
+7. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git fetch --tag origin bing2.0
+8. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git checkout tags/bing2.0 -b bing2.0
+9. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git diff bing1.0
+10. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>go run search-engine\search.go
+[image-server result for "golang"
+ video-server result for "golang"
+ web-server result for "golang"
+]
+82.8462ms
+
+11. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git checkout tags/bing3.0 -b bing3.0
+12. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>go run search-engine\search.go
+[web-server1 result for "golang"
+ image-server2 result for "golang"
+ video-server1 result for "golang"
+]
+42.037ms
+
+# stateless concurrency
+
+# now to stateful concurrency
+13. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>cd ping-pong\
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\ping-pong>go build
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\ping-pong>.\ping-pong.exe
+Timo Boll hit the ball..
+Ma Long hit the ball..
+Timo Boll hit the ball..
+Ma Long hit the ball..
+Timo Boll hit the ball..
+Ma Long hit the ball..
+Game ends..
+Timo Boll hit the ball..
+
+14. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go test -v
+# github.com/ashishnegi/golang-tour/bench
+code_test.go:6:2: cannot find package "github.com/stretchr/testify/assert" in any of:
+        C:\Go\src\github.com\stretchr\testify\assert (from $GOROOT)
+        C:\Users\asnegi\go\src\github.com\stretchr\testify\assert (from $GOPATH)
+FAIL    github.com/ashishnegi/golang-tour/bench [setup failed]
+
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go get -t
+
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go test -v
+=== RUN   TestFib
+--- PASS: TestFib (0.00s)
+=== RUN   TestFibNicely
+--- PASS: TestFibNicely (0.00s)
+PASS
+ok      github.com/ashishnegi/golang-tour/bench 3.091s
+
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>
+
+15. Benchmarking:
+
+// $ go test -v
+// === RUN TestFib
+// --- PASS: TestFib (0.00s)
+// === RUN TestFibNicely
+// --- PASS: TestFibNicely (0.00s)
+// PASS
+// ok github.com/ashishnegi/golang-tour/bench 0.058s
+// $ go test -bench Fib
+// goos: windows
+// goarch: amd64
+// pkg: github.com/ashishnegi/golang-tour/bench
+// BenchmarkFib-8 200000000 7.67 ns/op
+// PASS
+// ok github.com/ashishnegi/golang-tour/bench 2.356s
+// C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go test -bench Hello -benchmem
+// goos: windows
+// goarch: amd64
+// pkg: github.com/ashishnegi/golang-tour/bench
+// BenchmarkHello-4 2000 711997 ns/op 0 B/op 0 allocs/op
+// PASS
+// ok github.com/ashishnegi/golang-tour/bench 2.953s
+// change code in hello to allocate a string.
+// C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go test -bench Hello -benchmem
+// goos: windows
+// goarch: amd64
+// pkg: github.com/ashishnegi/golang-tour/bench
+// BenchmarkHello-4 2000 814000 ns/op 8 B/op 1 allocs/op
+// PASS
+// ok github.com/ashishnegi/golang-tour/bench 3.112s
+
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go tool pprof bench.test.exe cpu.out
+File: bench.test.exe
+Type: cpu
+Time: Mar 24, 2019 at 2:55pm (IST)
+Duration: 1.72s, Total samples = 1.58s (91.92%)
+Entering interactive mode (type "help" for commands, "o" for options)
+(pprof) top10
+Showing nodes accounting for 1.58s, 100% of 1.58s total
+Showing top 10 nodes out of 17
+      flat  flat%   sum%        cum   cum%
+     1.56s 98.73% 98.73%      1.56s 98.73%  github.com/ashishnegi/golang-tour/bench.fib
+     0.01s  0.63% 99.37%      0.01s  0.63%  runtime.stdcall1
+     0.01s  0.63%   100%      0.01s  0.63%  runtime/pprof.(*profMap).lookup
+         0     0%   100%      1.56s 98.73%  github.com/ashishnegi/golang-tour/bench.BenchmarkHello
+         0     0%   100%      1.56s 98.73%  github.com/ashishnegi/golang-tour/bench.hello
+         0     0%   100%      0.01s  0.63%  runtime.goready.func1
+         0     0%   100%      0.01s  0.63%  runtime.mstart
+         0     0%   100%      0.01s  0.63%  runtime.notewakeup
+         0     0%   100%      0.01s  0.63%  runtime.ready
+         0     0%   100%      0.01s  0.63%  runtime.semawakeup
+(pprof) list hello
+Total: 1.58s
+ROUTINE ======================== github.com/ashishnegi/golang-tour/bench.hello in C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench\code.go
+         0      1.56s (flat, cum) 98.73% of Total
+         .          .     16:   return a
+         .          .     17:}
+         .          .     18:
+         .          .     19:func hello(nth int) int {
+         .          .     20:   world("hello world...")
+         .      1.56s     21:   n := fib(nth)
+         .          .     22:   world("nth world") // replace with strconv.Itoa(nth)
+         .          .     23:   return n
+         .          .     24:}
+         .          .     25:
+         .          .     26:func world(s string) bool {
+(pprof) web
+Failed to execute dot. Is Graphviz installed? Error: exec: "dot": executable file not found in %PATH%
+(pprof) exit
+
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>
+
+
+
+
+You can follow readme.md for playing around with tutorials.
+ 
+Today we covered :
+	1. Benchmarking : https://github.com/ashishnegi/golang-tour/blob/master/bench/code_test.go#L57
+	2. OOPs in go : https://github.com/ashishnegi/golang-tour/blob/master/oops/oops.go
+	3. Stateful concurrency modelling in go :
+			a. https://github.com/ashishnegi/golang-tour/blob/master/ping-pong/game.go Design 2 player (multi threaded) ping pong when ball is shared between players.
