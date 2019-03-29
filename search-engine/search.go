@@ -50,8 +50,7 @@ func firstResult(query string, replicas ...Search) Result {
 func Bing(query string) (results []Result) {
 	// channel is first class citizen. you can pass them around like values.
 	// make a type safe channel.
-	resultsChannel := make(chan Result)
-
+	resultsChannel := make(chan Result, 3)
 	// go func() {... } () ==> starts function on a go routine.
 	// to put value on a channel ==> channelName <- value.
 	go func() { resultsChannel <- firstResult(query, WebSearch1, WebSearch2) }()
