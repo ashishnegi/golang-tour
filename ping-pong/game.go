@@ -9,6 +9,11 @@ import (
 // We want to model a ping pong game, where two players have access to ball.
 // Each hit increments the ball hit counter.
 
+// 2 players :
+	// no hit count lost because of concurrent access.
+	// one player can't hit ball twice.
+	// ball should be with one player at a time.
+
 type ball struct {
 	hits int
 }
@@ -30,8 +35,8 @@ func main() {
 	// comment out this line to see the deadlock.
 	table <- new(ball)
 	time.Sleep(3 * time.Second)
-	fmt.Println("Game ends..")
 	<-table
+	fmt.Println("Game ends..")
 }
 
 // asnegi@asnegi-sawvm MINGW64 ~/Documents/Gopath/src/github.com/ashishnegi/golang-tour/ping-pong (master)
