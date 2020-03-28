@@ -22,24 +22,31 @@ var (
 type Result string
 
 // typedef func
-type Search func(query string) Result
+type Search func(query string, cancel <-chan struct{}) Result
 
 // function :
 // func <func-name> ( argument-name argument-type ) return-type
 func fakeSearch(server string) Search {
 	// functions are first class citizens.
 	// you can pass them around like variables.
-	return func(query string) Result {
-		time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond)
-		return Result(fmt.Sprintf("%s result for %q\n", server, query))
+	return func(query string, cancel <-chan struct{}) Result {
+		server_query_simulation_timeout := time.After(time.Duration(rand.Intn(100)) * time.Millisecond)
+		select {
+		case <-server_query_simulation_timeout:
+			fmt.Println("success: %s", server)
+			return Result(fmt.Sprintf("%s : got result for %q\n", server, query))
+		case <-cancel:
+			fmt.Println("cancel: %s", server)
+			return Result(fmt.Sprintf("%s : no result for %q\n", server, query))
+		}
 	}
 }
 
-func firstResult(query string, replicas ...Search) Result {
+func firstResult(query string, cancel <-chan struct{}, replicas ...Search) Result {
 	resultChannel := make(chan Result)
 	for i := range replicas {
 		// gotcha // passing the i as parameter..
-		go func(nested_i int) { resultChannel <- replicas[nested_i](query) }(i)
+		go func(nested_i int) { resultChannel <- replicas[nested_i](query, cancel) }(i)
 	}
 	return <-resultChannel
 }
@@ -51,12 +58,13 @@ func Bing(query string) (results []Result) {
 	// channel is first class citizen. you can pass them around like values.
 	// make a type safe channel.
 	resultsChannel := make(chan Result)
+	cancelChannel := make(chan struct{})
 
 	// go func() {... } () ==> starts function on a go routine.
 	// to put value on a channel ==> channelName <- value.
-	go func() { resultsChannel <- firstResult(query, WebSearch1, WebSearch2) }()
-	go func() { resultsChannel <- firstResult(query, ImageSearch1, ImageSearch2) }()
-	go func() { resultsChannel <- firstResult(query, VideoSearch1, VideoSearch2) }()
+	go func() { resultsChannel <- firstResult(query, cancelChannel, WebSearch1, WebSearch2) }()
+	go func() { resultsChannel <- firstResult(query, cancelChannel, ImageSearch1, ImageSearch2) }()
+	go func() { resultsChannel <- firstResult(query, cancelChannel, VideoSearch1, VideoSearch2) }()
 
 	// make a timeout of 70 milliseconds for complete query.
 	timeout := time.After(70 * time.Millisecond)
@@ -66,13 +74,18 @@ func Bing(query string) (results []Result) {
 		case result := <-resultsChannel:
 			results = append(results, result)
 		case <-timeout:
+			close(cancelChannel)
 			fmt.Println("Request timedout")
 			return
 			// all channels will be garbage collected.
 			// but not go routines. // they will be lingering around untill web search is complete.
 		}
 	}
-	// channel is garbage collected.
+
+	// signal other goroutines that we are done.
+	close(cancelChannel)
+
+	// resultsChannel channel is garbage collected.
 	// no need to close it.
 	return
 }
@@ -85,4 +98,8 @@ func main() {
 	elapsed := time.Since(start)
 	fmt.Println(results)
 	fmt.Println(elapsed)
+
+	fmt.Println("Enter text to exit")
+	var input string
+	fmt.Scanln(&input)
 }
