@@ -99,6 +99,7 @@ func main() {
 	fmt.Println(results)
 	fmt.Println(elapsed)
 
+	// for clean shutdown we can add waitgroups.
 	fmt.Println("Enter text to exit")
 	var input string
 	fmt.Scanln(&input)
