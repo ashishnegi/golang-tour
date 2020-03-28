@@ -43,7 +43,7 @@ func fakeSearch(server string) Search {
 }
 
 func firstResult(query string, cancel <-chan struct{}, replicas ...Search) Result {
-	resultChannel := make(chan Result)
+	resultChannel := make(chan Result, len(replicas))
 	for i := range replicas {
 		// gotcha // passing the i as parameter..
 		go func(nested_i int) { resultChannel <- replicas[nested_i](query, cancel) }(i)
@@ -57,7 +57,7 @@ func firstResult(query string, cancel <-chan struct{}, replicas ...Search) Resul
 func Bing(query string) (results []Result) {
 	// channel is first class citizen. you can pass them around like values.
 	// make a type safe channel.
-	resultsChannel := make(chan Result)
+	resultsChannel := make(chan Result, 3)
 	cancelChannel := make(chan struct{})
 
 	// go func() {... } () ==> starts function on a go routine.
