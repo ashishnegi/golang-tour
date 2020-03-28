@@ -123,6 +123,24 @@ C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>
 // PASS
 // ok github.com/ashishnegi/golang-tour/bench 3.112s
 
+// D:\GoPath\src\github.com\ashishnegi\golang-tour\bench>go test -bench Json -benchmem
+// goos: windows
+// goarch: amd64
+// pkg: github.com/ashishnegi/golang-tour/bench
+// BenchmarkJson-8            25366             39811 ns/op            3982 B/op         63 allocs/op
+// PASS
+// ok      github.com/ashishnegi/golang-tour/bench 1.735s
+//
+// D:\GoPath\src\github.com\ashishnegi\golang-tour\bench>
+
+D:\GoPath\src\github.com\ashishnegi\golang-tour\bench>go test -bench Json -cpuprofile cpu.out
+goos: windows
+goarch: amd64
+pkg: github.com/ashishnegi/golang-tour/bench
+BenchmarkJson-8            53018             37787 ns/op
+PASS
+ok      github.com/ashishnegi/golang-tour/bench 3.857s
+
 C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>go tool pprof bench.test.exe cpu.out
 File: bench.test.exe
 Type: cpu
