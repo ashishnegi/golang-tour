@@ -3,19 +3,26 @@ Here is the code : https://github.com/ashishnegi/golang-tour
 See, how It looks like for normal programmer :
 2 env variables : GOROOT and GOPATH
 
+> C:\Users\asnegi\Downloads\go1.14.1.windows-amd64\myworkspace\src\github.com\ashishnegi\golang-tour
 C:\Users\asnegi>dir go\bin\
 C:\Users\asnegi>dir go\src\github.com\ashishnegi\golang-tour\
 
 del go\bin\search-engine.exe
 C:\Users\asnegi>rmdir /s /q go\src\github.com\ashishnegi\golang-tour\
 
-1. Setup golang : https://nats.io/documentation/tutorials/go-install/
+1. Setup golang : https://golang.org/doc/install?download=go1.14.1.windows-amd64.zip
+
+> set PATH=C:\Users\asnegi\Downloads\go1.14.1.windows-amd64\go\bin;%PATH%
+> set GOROOT=C:\Users\asnegi\Downloads\go1.14.1.windows-amd64\go\
+> set GOPATH=C:\Users\asnegi\Downloads\go1.14.1.windows-amd64\myworkspace\
+> pushd %GOPATH%
 
 2. And run `go get -d github.com/ashishnegi/golang-tour`
+
 # inspired by Plan9 OS : everything is a file.
 dir go\src\github.com\ashishnegi\golang-tour\
 
-C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\search-engine>go build search.go
+>go build search.go
 
 3. Run `go run <file_name>.go` to run code in file which has main function.
 C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>go run search-engine\search.go
@@ -28,7 +35,7 @@ C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>go run search-engine\se
 C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour> git fetch --tags
 
 4. C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git fetch --tag  origin bing1.0
-C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git checkout tag/bing1.0 -b bing1.0
+C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour>git checkout -b tag/bing1.0 bing1.0
 
 5. Talk about code.
 
