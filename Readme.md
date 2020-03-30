@@ -26,3 +26,6 @@ go run github.com/ashishnegi/search-engine/search.go
 ```
 go get -t
 ```
+
+Presentation: https://docs.google.com/presentation/d/1IWn_Yxi7B7KwH5oyYQElc3INbJY5Rw2R2ZWdVx7_0uk/edit?usp=sharing
+Tutorial: https://github.com/ashishnegi/golang-tour/blob/master/tutorial.txt
