@@ -189,13 +189,22 @@ Failed to execute dot. Is Graphviz installed? Error: exec: "dot": executable fil
 
 C:\Users\asnegi\go\src\github.com\ashishnegi\golang-tour\bench>
 
-
-
-
 You can follow readme.md for playing around with tutorials.
- 
-Today we covered :
-	1. Benchmarking : https://github.com/ashishnegi/golang-tour/blob/master/bench/code_test.go#L57
-	2. OOPs in go : https://github.com/ashishnegi/golang-tour/blob/master/oops/oops.go
-	3. Stateful concurrency modelling in go :
-			a. https://github.com/ashishnegi/golang-tour/blob/master/ping-pong/game.go Design 2 player (multi threaded) ping pong when ball is shared between players.
+1. Benchmarking : https://github.com/ashishnegi/golang-tour/blob/master/bench/code_test.go#L57
+2. OOPs in go : https://github.com/ashishnegi/golang-tour/blob/master/oops/oops.go
+3. Stateful concurrency modelling in go :
+   a. https://github.com/ashishnegi/golang-tour/blob/master/ping-pong/game.go
+      Design 2 player (multi threaded) ping pong when ball is shared between players.
+
+D:\GoPath\src\github.com\ashishnegi\golang-tour\oops>go run oops.go
+Creature: Lion ; Real : true
+Flying Creature: Bat ; Real : true ; WingSpan : 1, Foo: Creature: Bat's Foo
+Rectangle : 6.000000
+Circle : 28.260000
+Some work on IShape: Area is:  12
+I was written for boost thread:
+BoostThread start...
+I was written for boost thread:
+StdThread start...
+
+D:\GoPath\src\github.com\ashishnegi\golang-tour\oops>
