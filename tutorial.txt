@@ -1,6 +1,6 @@
 Here is the code : https://github.com/ashishnegi/golang-tour
 
-See, how It looks like for normal programmer :
+Go setup and daily development environment for Go programmers:
 2 env variables : GOROOT and GOPATH
 
 > C:\Users\asnegi\Downloads\go1.14.1.windows-amd64\myworkspace\src\github.com\ashishnegi\golang-tour
